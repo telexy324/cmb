@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_fielderror.html" as fielderror %}
+
+{% block title %}cmb{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>认证日志</h1>
+    </div>
+
+    <form method="POST" action="">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class='col-sm-4'>
+                <div class="form-group">
+                    <label>{{ form.faccountid.label }}</label>
+                    <div>{{ form.faccountid(class="form-control") }}</div>
+                    {{ fielderror.field_errors(form.faccountid) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <label>{{ form.submit.label }}</label>
+                    <div>{{ form.submit(class="form-control btn btn-primary") }}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if ispauthstarttbl %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>方宽ID</th>
+                <th>方宽登陆名</th>
+                <th>移动登陆名</th>
+                <th>认证时间</th>
+                <th>上线时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ ispauthstarttbl[0] }}</td>
+                <td>{{ ispauthstarttbl[1] }}</td>
+                <td>{{ ispauthstarttbl[2] }}</td>
+                <td>{{ ispauthstarttbl[3] }}</td>
+                <td>{{ ispauthstarttbl[4] }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

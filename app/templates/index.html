@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_fielderror.html" as fielderror %}
+
+{% block title %}cmb{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='bootstrap-datetimepicker.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>请选择模块</h1>
+    </div>
+
+    <div class='col-sm-4'>
+        <a href="{{ url_for('main.bindQuery') }}">绑定查询</a>
+        <a href="{{ url_for('main.changeBind') }}">绑定更换</a>
+        <a href="{{ url_for('main.authLog') }}">认证日志</a>
+    </div>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_fielderror.html" as fielderror %}
+
+{% block title %}cmb{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block page_content %}
+    <div class="page-header">
+        <h1>绑定查询</h1>
+    </div>
+
+    <form method="POST" action="">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class='col-sm-4'>
+                <div class="form-group">
+                    <label>{{ form.faccountid.label }}</label>
+                    <div>{{ form.faccountid(class="form-control") }}</div>
+                    {{ fielderror.field_errors(form.faccountid) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-2'>
+                <div class="form-group">
+                    <label>{{ form.submit.label }}</label>
+                    <div>{{ form.submit(class="form-control btn btn-primary") }}</div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if accountcorrespond %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>方宽ID</th>
+                <th>方宽登陆名</th>
+                <th>移动登陆名</th>
+                <th>移动密码</th>
+                <th>合作类别</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ accountcorrespond[0] }}</td>
+                <td>{{ accountcorrespond[1] }}</td>
+                <td>{{ accountcorrespond[2] }}</td>
+                <td>{{ accountcorrespond[3] }}</td>
+                <td>{{ accountcorrespond[4] }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
+
+
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
