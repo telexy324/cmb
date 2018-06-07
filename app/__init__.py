@@ -6,6 +6,7 @@ from config import config
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 import cx_Oracle
+from flask_uploads import configure_uploads
 import pymysql
 pymysql.install_as_MySQLdb()
 

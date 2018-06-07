@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_fielderror.html" as fielderror %}
+
+{% block title %}cmb{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block page_content %}
+        {% if filelist %}
+    <div class="row">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <tr class="success">
+                <th>文件名</th>
+                <th>URL</th>
+                <th></th>
+            </thead>
+            <tbody id="trtd">
+                <td>{{ filelist['filename'] }}</td>
+                <td>{{ filelist['url'] }}</td>
+                <td>
+                    <div class="col-sm-3">
+                        <button id="import" class="btn btn-primary btn-block" type="button">导入</button>
+                    </div>
+                </td>
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        $(document).ready(function () {
+            $("#collect").click(function () {
+                var city = $("#select_city").val();
+                $("#trtd").html('<tr><td class="text-center"><img src="/static/img/dataloading.gif"/></td></tr>');
+                $.ajax({
+                    url: "{{ url_for('server.host_api') }}",
+                    type: "POST",
+                    data: JSON.stringify({"city": city}),
+                    contentType: 'application/json; charset=UTF-8',
+                    dataType: "json",
+                    success: function (result) {
+                        $("#trtd").html("");
+                        $.each(result, function (index, value) {
+                            var str_con = "";
+                            var serverip = index
+                            $.each(value, function (i, v) {
+                                str_con += '<td>' + v + '</td>';
+                            });
+                            $("#trtd").append('<tr>' + str_con + '<td><div class="col-sm-6"><button id="server" name=' + serverip + ' class="btn btn-primary btn-block" type="button">运维</button></div></td></tr>');
+                        });
+                    }
+
+                });
+            });
+            $("#trtd").on('click',"#server",function () {
+                var hostip = $(this).attr('name')
+                var salturl = "{{ url_for('salt.fixed_ip') }}" + "?ip=" + hostip
+                window.location.replace(salturl)
+            });
+        });
+
+    </script>
+{% endblock %}
+

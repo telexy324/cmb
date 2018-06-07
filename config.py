@@ -1,4 +1,5 @@
 import os
+from flask_uploads import DOCUMENTS
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -6,6 +7,8 @@ class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    UPLOADED_FILES_DEST = os.path.dirname(os.path.abspath(__file__))+'/files'
+    UPLOADED_TEST_ALLOW = DOCUMENTS
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \

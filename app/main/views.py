@@ -1,11 +1,15 @@
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, request, flash
+from flask import render_template, session, redirect, url_for, request, flash, jsonify
 
 from . import main
-from .forms import BindQueryForm, ChangeBindForm, AuthLogForm
+from .forms import BindQueryForm, ChangeBindForm, AuthLogForm, UploadForm
 from .. import db
 import cx_Oracle
 from ..models import Type9users1
+from flask_uploads import UploadSet, configure_uploads, DOCUMENTS
+from werkzeug.utils import secure_filename
+#from manage import files
+from app.main.forms import files
 
 
 @main.route('/', methods=['GET'])
@@ -118,3 +122,32 @@ def changeBind():
 
         return render_template('changebind.html', form=form)
     return render_template('changebind.html', form=form)
+
+
+#@main.route('/upload', methods=['GET', 'POST'])
+#def upload():
+    #if request.method == 'POST' and 'media' in request.files:
+        #filename = files.save(request.files['media'])
+        #url = files.url(filename)
+    #return render_template('upload.html')
+
+
+@main.route('/upload', methods=['GET', 'POST'])
+def upload():
+    form = UploadForm()
+    if request.method == 'POST':
+        filename = secure_filename(form.upload.data.filename)
+        files.save(form.upload.data, name=form.upload.data.filename)
+        url = files.url(filename)
+    return render_template('upload.html', form=form)
+
+
+@main.route('/filelist', methods=['GET', 'POST'])
+def filelist():
+    return render_template('filelist.html')
+
+
+@main.route('/fileimport', methods=['GET', 'POST'])
+def filelist():
+    return render_template('filelist.html')
+

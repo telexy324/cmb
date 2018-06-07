@@ -3,10 +3,16 @@ import os
 from app import create_app, db
 from flask_script import Manager, Shell, Server
 from flask_migrate import Migrate, MigrateCommand
+from flask_uploads import UploadSet, DOCUMENTS
+from flask_uploads import configure_uploads, patch_request_class
+from app.main.forms import files
+
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
+configure_uploads(app, (files,))
+patch_request_class(app, size=100*1024*1024)
 
 
 def make_shell_context():
